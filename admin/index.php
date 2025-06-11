@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_scammer'])) {
     }
 
     try {
-        $stmt = $conn->prepare("INSERT INTO scammers 
-            (Telegram_Name, Twitter, Name, Whatsapp, Binance_ID, USDT_Address, BTC_Address, Paypal_ID, Email, Notes) 
+        $stmt = $conn->prepare("INSERT INTO scammers
+            (Telegram_Name, Twitter, Name, Whatsapp, Binance_ID, USDT_Address, BTC_Address, Paypal_ID, Email, Notes)
             VALUES (:Telegram_Name, :Twitter, :Name, :Whatsapp, :Binance_ID, :USDT_Address, :BTC_Address, :Paypal_ID, :Email, :Notes)");
 
         foreach ($data as $key => $value) {
@@ -127,6 +127,11 @@ try {
             color: #00c6ff;
         }
 
+        a.edit-link {
+            color: #00c6ff;
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             th, td, form input, form textarea {
                 font-size: 14px;
@@ -172,6 +177,8 @@ try {
             <th>Paypal ID</th>
             <th>Email</th>
             <th>Notes</th>
+            <th>Edit</th>
+	    <th>Delete</th>
         </tr>
         <?php foreach ($scammers as $row): ?>
             <tr>
@@ -185,6 +192,8 @@ try {
                 <td><?= htmlspecialchars($row['Paypal_ID']) ?></td>
                 <td><?= htmlspecialchars($row['Email']) ?></td>
                 <td><?= htmlspecialchars($row['Notes']) ?></td>
+                <td><a class="edit-link" href="edit_scammer.php?id=<?= $row['id'] ?>">Edit</a></td>
+		<td><a class="edit-link" href="delete_scammer.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this scammer?');">Delete</a></td>
             </tr>
         <?php endforeach; ?>
     </table>
